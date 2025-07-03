@@ -18,25 +18,40 @@ function exemplo1() {
       alert(` ${nome}, sua média foi ${media.toFixed(1)}. Situação: ${status}.`);
     }
 
-       document.getElementById("formulario").addEventListener("submit", function (e) {
-          e.preventDefault();
-      
-          const valores = [];
-          for (let i = 1; i <= 5; i++) {
-            const valor = document.getElementById(`valor${i}`).value.trim();
-            if (valor === "") {
-              alert(`O campo Valor ${i} está vazio.`);
-              return;
-            }
-            valores.push(valor);
-          }
-      
-          const conteudo = valores.map((v, i) => `Valor ${i + 1}: ${v}`).join("\n");
-      
-          const blob = new Blob([conteudo], { type: "text/plain;charset=utf-8" });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = "valores.txt";
-          link.click();
-        });
+   function exemplo3() {
+  const container = document.getElementById("conteudo");
+  container.innerHTML = `
+    <h2>📥 Preencha os valores</h2>
+    <form id="formulario">
+      <input type="text" id="valor1" placeholder="Valor 1"><br><br>
+      <input type="text" id="valor2" placeholder="Valor 2"><br><br>
+      <input type="text" id="valor3" placeholder="Valor 3"><br><br>
+      <input type="text" id="valor4" placeholder="Valor 4"><br><br>
+      <input type="text" id="valor5" placeholder="Valor 5"><br><br>
+      <button type="submit">Salvar em TXT</button>
+    </form>
+    <p id="resultado"></p>
+  `;
+
+  document.getElementById("formulario").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const valores = [];
+    for (let i = 1; i <= 5; i++) {
+      const valor = document.getElementById(`valor${i}`).value.trim();
+      if (valor === "") {
+        alert(`O campo Valor ${i} está vazio.`);
+        return;
+      }
+      valores.push(valor);
+    }
+
+    const conteudo = valores.map((v, i) => `Valor ${i + 1}: ${v}`).join("\n");
+
+    const blob = new Blob([conteudo], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "valores.txt";
+    link.click();
+  });
 }
